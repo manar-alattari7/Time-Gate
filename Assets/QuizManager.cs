@@ -14,7 +14,6 @@ public class QuizManager : MonoBehaviour
     }
 
     [Header("UI Elements")]
-    //public TextMeshProUGUI questionTextUI;
     public RTLTextMeshPro questionTextUI;
     public Button[] answerButtons;
     public GameObject quizPanel;
@@ -28,11 +27,8 @@ public class QuizManager : MonoBehaviour
     void Start()
     {
         StartQuiz();
-        // إخفاء لوحة الأسئلة عند بداية اللعبة
-       // quizPanel.SetActive(false);
     }
 
-    // استدعاء هذه الدالة لبدء الاختبار
     public void StartQuiz()
     {
         currentQuestionIndex = 0;
@@ -50,21 +46,24 @@ public class QuizManager : MonoBehaviour
     {
         QuestionData currentQuestion = questions[currentQuestionIndex];
 
+        // عرض السؤال
         questionTextUI.text = currentQuestion.questionText;
-        
-      
+
+        // عرض الإجابات
         for (int i = 0; i < answerButtons.Length; i++)
         {
             if (i < currentQuestion.answers.Length)
             {
                 answerButtons[i].gameObject.SetActive(true);
 
-                 answerButtons[i]
-                 .GetComponentInChildren<TextMeshProUGUI>()
-                 .text = currentQuestion.answers[i];
-                
-               
-                
+                RTLTextMeshPro answerText =
+                    answerButtons[i].GetComponentInChildren<RTLTextMeshPro>();
+
+                if (answerText != null)
+                {
+                    answerText.text = currentQuestion.answers[i];
+                }
+
                 int index = i;
 
                 answerButtons[i].onClick.RemoveAllListeners();
